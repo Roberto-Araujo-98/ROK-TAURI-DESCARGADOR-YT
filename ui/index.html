@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ROK Tauri Descargador YT</title>
+    <style>
+        :root {
+            --bg: #1e1e2e;
+            --surface: #252538;
+            --text: #cdd6f4;
+            --accent: #cba6f7;
+            --accent-hover: #b4befe;
+            --error: #f38ba8;
+            --success: #a6e3a1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background-color: var(--surface);
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #45475a;
+            border-radius: 6px;
+            background-color: var(--bg);
+            color: var(--text);
+            font-size: 1rem;
+            box-sizing: border-box;
+            margin-bottom: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus {
+            border-color: var(--accent);
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+        }
+
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--accent);
+            color: var(--bg);
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: var(--accent-hover);
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        button:disabled {
+            background-color: #585b70;
+            color: #a6adc8;
+            cursor: not-allowed;
+        }
+
+        #status {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .error { color: var(--error); }
+        .success { color: var(--success); }
+        .loading { color: var(--accent-hover); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>ROK YT Downloader</h1>
+        
+        <input type="text" id="url-input" placeholder="Pega la URL de YouTube aquí..." autocomplete="off">
+        
+        <div class="options">
+            <label>
+                <input type="radio" name="format" value="video" checked> Video (MP4)
+            </label>
+            <label>
+                <input type="radio" name="format" value="mp3"> Audio (MP3 192kbps)
+            </label>
+        </div>
+
+        <button id="download-btn">Descargar</button>
+
+        <div id="status"></div>
+    </div>
+
+    <script>
+        // Tauri inyecta la API en window.__TAURI__.core en su versión 2.0
+        const { invoke } = window.__TAURI__.core;
+
+        const urlInput = document.getElementById('url-input');
+        const downloadBtn = document.getElementById('download-btn');
+        const statusDiv = document.getElementById('status');
+
+        downloadBtn.addEventListener('click', async () => {
+            const url = urlInput.value.trim();
+            if (!url) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = 'Por favor, ingresa una URL válida.';
+                return;
+            }
+
+            const formato = document.querySelector('input[name="format"]:checked').value;
+
+            urlInput.disabled = true;
+            downloadBtn.disabled = true;
+            statusDiv.className = 'loading';
+            statusDiv.textContent = 'Descargando... Por favor, espera.\n(El progreso se enviará a tu backend)';
+
+            try {
+                // Invocamos el comando 'descargar_video' que definimos en Rust
+                const respuesta = await invoke('descargar_video', { url: url, formato: formato });
+                
+                statusDiv.className = 'success';
+                statusDiv.textContent = respuesta;
+                urlInput.value = ''; 
+            } catch (error) {
+                statusDiv.className = 'error';
+                statusDiv.textContent = error;
+            } finally {
+                urlInput.disabled = false;
+                downloadBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
