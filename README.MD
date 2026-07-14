@@ -1,6 +1,6 @@
 # 🦊 ROK Tauri YouTube Downloader ⚡🤖
 
-Un cliente de escritorio ultra elegante y de alto rendimiento para descargar videos y audio de YouTube. Desarrollado con la velocidad de **Rust (Tauri v2)**, un **sidecar de Python** personalizado y una interfaz web moderna y responsiva.
+Cliente de escritorio ultra elegante y de alto rendimiento para descargar videos y audio de YouTube. Desarrollado con la velocidad de **Rust (Tauri v2)**, un **sidecar de Python** personalizado y una interfaz web moderna y responsiva.
 
 Este proyecto utiliza el patrón seguro **Sidecar** de Tauri para delegar las tareas pesadas de extracción y procesamiento de video a un backend local de Python compilado, manteniendo la aplicación principal sumamente ligera y rápida.
 
@@ -33,9 +33,10 @@ Este proyecto utiliza el patrón seguro **Sidecar** de Tauri para delegar las ta
 Antes de compilar o ejecutar el proyecto en modo de desarrollo, asegúrate de tener instalado lo siguiente en tu sistema:
 
 *   **Rust (MSRV 1.75+)**: Instalado a través de [rustup](https://rustup.rs/).
-*   **Node.js**: Se recomienda la versión LTS (con `npm`, `yarn` o `pnpm`).
 *   **Python 3.10+**: Necesario únicamente para compilar el script descargador.
 *   **Herramientas de compilación de Microsoft C++**: Requerido por Rust para compilar binarios nativos de Windows.
+
+> Este proyecto se compila y ejecuta enteramente con **Cargo**, sin depender de Node.js ni npm.
 
 ---
 
@@ -80,24 +81,30 @@ Para poder unir flujos de video de alta calidad (1080p, 4K) con sus respectivas 
 
 ## 💻 Desarrollo y Compilación
 
-Una vez que tengas todos los binarios necesarios en sus carpetas correspondientes, puedes ejecutar la aplicación de forma local o empaquetarla para su distribución.
-## 💻 Desarrollo y Compilación
-
-Una vez que tengas todos los binarios necesarios en sus carpetas correspondientes, puedes ejecutar la aplicación de forma local o empaquetarla para su distribución usando **Cargo** sin depender de Node.js ni npm.
+Una vez que tengas todos los binarios necesarios en sus carpetas correspondientes, puedes ejecutar la aplicación de forma local o empaquetarla para su distribución usando **Cargo**.
 
 ### Ejecutar en Modo de Desarrollo
+
 ```bash
 # Iniciar Tauri en modo de desarrollo con recarga en vivo
 cargo tauri dev
+```
 
+### Compilar para Distribución
+
+```bash
 # Compila todo el código en un instalador optimizado y ligero (.msi / .exe)
 cargo tauri build
+```
+
+---
 
 ## 🔮 Ruta de Desarrollo Futuro (Expansión Multiplataforma)
 
 Para transformar esta herramienta local en un software compatible con múltiples sistemas operativos, se han planteado los siguientes objetivos de desarrollo:
 
 ### 🐧 1. Compatibilidad con Linux
+
 *   **Compilación de Sidecars**: Compilar el sidecar de Python dentro de un entorno Linux usando PyInstaller para apuntar al objetivo `x86_64-unknown-linux-gnu`:
     ```bash
     pyinstaller --onefile --name descargador-yt-x86_64-unknown-linux-gnu descargador-yt.py
@@ -106,6 +113,7 @@ Para transformar esta herramienta local en un software compatible con múltiples
 *   **Empaquetado**: Generar paquetes instalables nativos como archivos `.deb` o `.AppImage`.
 
 ### 🤖 2. Adaptación a Android (Tauri v2 Mobile)
+
 *   **Cambio Arquitectónico**: Los dispositivos móviles Android no pueden ejecutar directamente archivos `.exe` de escritorio. La lógica de extracción escrita en Python se migrará hacia:
     *   Un módulo embebido en **Rust** usando bindings nativos (como la librería `pyo3` si se requiere conservar Python estrictamente).
     *   O bien, reescribir toda la lógica de obtención directamente en **módulos nativos de Rust** (utilizando librerías de red y concurrencia como `tokio` y procesadores de HTTP personalizados).
@@ -116,6 +124,6 @@ Para transformar esta herramienta local en un software compatible con múltiples
 
 ## 📜 Licencia e Intención
 
-Desarrollado como una aplicación de escritorio local, rápida y segura. Bajo una optimización constante guiada por un enfoque de desarrollo activo y libre, disfrutando de la creación pura de software sin límites. 
+Desarrollado como una aplicación de escritorio local, rápida y segura. Bajo una optimización constante guiada por un enfoque de desarrollo activo y libre, disfrutando de la creación pura de software sin límites.
 
 *Creado por Roberto Ricardo Araujo Ari - ROK.*
