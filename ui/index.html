@@ -1,178 +1,317 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ROK Tauri Descargador YT</title>
-    <style>
-        :root {
-            --bg: #1e1e2e;
-            --surface: #252538;
-            --text: #cdd6f4;
-            --accent: #cba6f7;
-            --accent-hover: #b4befe;
-            --error: #f38ba8;
-            --success: #a6e3a1;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ROK YT Downloader // NET-RUNNER</title>
+  
+  <style>
+    /* --- CONFIGURACIÓN ESTILO CYBERPUNK LIMPIO --- */
+    :root {
+      --bg-color: #050507;        /* Negro absoluto de fondo */
+      --card-bg: #0b0c10;         /* Negro grisáceo tecnológico */
+      --text-color: #ffffff;      /* Blanco para textos principales */
+      --text-secondary: #00f0ff;  /* Azul Neón / Cian */
+      --primary: #16a34a;         /* Verde base */
+      --neon-green: #00ff66;     /* Verde Neón */
+      --neon-green-glow: rgba(0, 255, 102, 0.25); /* Brillo suavizado */
+      --cyber-blue: #00f0ff;     /* Azul Neón */
+      --cyber-blue-glow: rgba(0, 240, 255, 0.2);  /* Brillo suavizado */
+      --danger: #dc2626;          /* Rojo base */
+      --neon-red: #ff0055;       /* Rojo Neón */
+      --neon-red-glow: rgba(255, 0, 85, 0.25);
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg);
-            color: var(--text);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      /* Líneas de escaneo sutiles CRT */
+      background-image: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.03));
+      background-size: 100% 4px, 6px 100%;
+    }
 
-        .container {
-            background-color: var(--surface);
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
-            width: 100%;
-            max-width: 480px;
-            text-align: center;
-        }
+    .container {
+      background-color: var(--card-bg);
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid var(--cyber-blue);
+      box-shadow: 0 8px 30px var(--cyber-blue-glow), inset 0 0 15px rgba(0, 240, 255, 0.05);
+      width: 480px;
+      text-align: center;
+      position: relative;
+    }
 
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--accent);
-        }
+    h2 {
+      margin-top: 0;
+      font-size: 24px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
 
-        input[type="text"] {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #45475a;
-            border-radius: 6px;
-            background-color: var(--bg);
-            color: var(--text);
-            font-size: 1rem;
-            box-sizing: border-box;
-            margin-bottom: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
+    h2 span {
+      color: var(--neon-green);
+      text-shadow: 0 0 6px var(--neon-green-glow);
+    }
 
-        input[type="text"]:focus {
-            border-color: var(--accent);
-        }
+    .subtitle {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
 
-        .options {
-            display: flex;
-            justify-content: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
+    .input-group {
+      margin-bottom: 20px;
+    }
 
-        .options label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-        }
+    input[type="text"] {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid var(--cyber-blue);
+      border-radius: 6px;
+      background-color: #020203;
+      color: var(--neon-green);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 14px;
+      box-sizing: border-box;
+      transition: all 0.2s;
+      text-shadow: 0 0 3px var(--neon-green-glow);
+    }
 
-        button {
-            width: 100%;
-            padding: 0.75rem;
-            border: none;
-            border-radius: 6px;
-            background-color: var(--accent);
-            color: var(--bg);
-            font-size: 1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.2s, transform 0.1s;
-        }
+    input[type="text"]:focus {
+      outline: none;
+      border-color: var(--neon-green);
+      box-shadow: 0 0 10px var(--neon-green-glow);
+    }
 
-        button:hover {
-            background-color: var(--accent-hover);
-        }
+    .btn-group {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 15px;
+    }
 
-        button:active {
-            transform: scale(0.98);
-        }
+    button {
+      padding: 12px 20px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-transform: uppercase;
+    }
 
-        button:disabled {
-            background-color: #585b70;
-            color: #a6adc8;
-            cursor: not-allowed;
-        }
+    button:active {
+      transform: scale(0.98);
+    }
 
-        #status {
-            margin-top: 1.5rem;
-            font-size: 0.9rem;
-            line-height: 1.4;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
+    /* Botón Verde (Audio) - Brillo suavizado al pasar el cursor */
+    .btn-audio { 
+      background-color: var(--primary); 
+      color: white; 
+    }
+    .btn-audio:hover { 
+      background-color: var(--neon-green); 
+      color: #000000;
+      box-shadow: 0 0 8px var(--neon-green); /* Atenuado para que no sea muy brilloso */
+    }
 
-        .error { color: var(--error); }
-        .success { color: var(--success); }
-        .loading { color: var(--accent-hover); }
-    </style>
+    /* Botón Azul (Video) - Brillo suavizado al pasar el cursor */
+    .btn-video { 
+      background-color: #0099ff; 
+      color: white; 
+    }
+    .btn-video:hover { 
+      background-color: var(--cyber-blue); 
+      color: #000000;
+      box-shadow: 0 0 8px var(--cyber-blue);  /* Atenuado para que no sea muy brilloso */
+    }
+
+    .btn-secondary { 
+      background-color: #3f3f46; 
+      color: white; 
+      margin-top: 15px;
+    }
+    .btn-secondary:hover { 
+      background-color: #52525b; 
+      box-shadow: 0 0 6px rgba(255,255,255,0.15);
+    }
+
+    /* Botón Rojo (Salir) - Brillo suavizado al pasar el cursor */
+    .btn-danger { 
+      background-color: var(--danger); 
+      color: white; 
+      width: 100%; 
+      justify-content: center; 
+    }
+    .btn-danger:hover { 
+      background-color: var(--neon-red); 
+      box-shadow: 0 0 8px var(--neon-red);    /* Atenuado para que no sea muy brilloso */
+    }
+
+    /* Clases para alternar paneles */
+    .oculto {
+      display: none !important;
+    }
+
+    #panel-progreso {
+      padding: 15px 0;
+    }
+
+    .spinner {
+      border: 4px solid rgba(0, 240, 255, 0.1);
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border-left-color: var(--neon-green);
+      border-right-color: var(--cyber-blue);
+      animation: spin 1s linear infinite;
+      margin: 0 auto 20px auto;
+      box-shadow: 0 0 8px var(--cyber-blue-glow);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* --- CONTENEDOR DE TERMINAL ESTILIZADO PARA LOS NÚMEROS Y % --- */
+    .terminal-box {
+      background-color: #020204;
+      border: 1px solid #22252a;
+      border-radius: 6px;
+      padding: 15px;
+      max-height: 180px;
+      overflow-y: auto;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .estado-msg {
+      font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada para alinear % */
+      font-size: 13px;
+      line-height: 1.5;
+      color: #a3e635; /* Tono verde terminal legible */
+      margin: 0;
+      white-space: pre-wrap; /* Mantiene saltos de línea y tabulaciones de forma estética */
+      word-break: break-all;
+    }
+
+    .terminal-footer {
+      font-family: monospace;
+      font-size: 10px;
+      color: #454e59;
+      margin-top: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="container">
-        <h1>ROK YT Downloader</h1>
-        
-        <input type="text" id="url-input" placeholder="Pega la URL de YouTube aquí..." autocomplete="off">
-        
-        <div class="options">
-            <label>
-                <input type="radio" name="format" value="video" checked> Video (MP4)
-            </label>
-            <label>
-                <input type="radio" name="format" value="mp3"> Audio (MP3 192kbps)
-            </label>
-        </div>
-
-        <button id="download-btn">Descargar</button>
-
-        <div id="status"></div>
+  <div class="container">
+    
+    <!-- 1. PANEL PRINCIPAL / MENÚ -->
+    <div id="panel-menu">
+      <h2>ROK // <span>YT_EXTRACTOR</span></h2>
+      <div class="subtitle">>> STATUS: READY_TO_INJECT_URL</div>
+      
+      <div class="input-group">
+        <input type="text" id="input-url" placeholder="[INGRESE URL DE YOUTUBE AQUÍ]" autocomplete="off">
+      </div>
+      
+      <div class="btn-group">
+        <button id="btn-audio" class="btn-audio">🎵 AUDIO.mp3</button>
+        <button id="btn-video" class="btn-video">🎥 VIDEO.mp4</button>
+      </div>
+      
+      <hr style="border: 0; border-top: 1px dashed #454e59; margin: 20px 0;">
+      
+      <button id="btn-salir" class="btn-danger">❌ DISCONNECT_APP</button>
     </div>
 
-    <script>
-        // Tauri inyecta la API en window.__TAURI__.core en su versión 2.0
-        const { invoke } = window.__TAURI__.core;
+    <!-- 2. PANEL DE PROGRESO Y RESULTADOS -->
+    <div id="panel-progreso" class="oculto">
+      <div id="animacion-carga" class="spinner"></div>
+      
+      <!-- Consola estilo terminal para acomodar logs y porcentajes ordenadamente -->
+      <div class="terminal-box">
+        <p id="texto-estado" class="estado-msg">🚀 INICIANDO ENLACE DE DATOS... ESPERE CONEXIÓN CON YT-DLP.</p>
+      </div>
+      
+      <button id="btn-regresar" class="btn-secondary oculto">🔄 RETURN_TO_MENU</button>
+    </div>
 
-        const urlInput = document.getElementById('url-input');
-        const downloadBtn = document.getElementById('download-btn');
-        const statusDiv = document.getElementById('status');
+    <div class="terminal-footer">ROK_NET_SYSTEMS // PORT_8080 // SECURITY: SECURE</div>
+  </div>
 
-        downloadBtn.addEventListener('click', async () => {
-            const url = urlInput.value.trim();
-            if (!url) {
-                statusDiv.className = 'error';
-                statusDiv.textContent = 'Por favor, ingresa una URL válida.';
-                return;
-            }
+  <!-- --- LÓGICA DE CONTROL (JAVASCRIPT) --- -->
+  <script type="module">
+    const { invoke } = window.__TAURI__.core;
+    const { getCurrentWindow } = window.__TAURI__.window;
 
-            const formato = document.querySelector('input[name="format"]:checked').value;
+    const panelMenu = document.getElementById('panel-menu');
+    const panelProgreso = document.getElementById('panel-progreso');
+    const inputUrl = document.getElementById('input-url');
+    const textoEstado = document.getElementById('texto-estado');
+    const animacionCarga = document.getElementById('animacion-carga');
+    const btnRegresar = document.getElementById('btn-regresar');
 
-            urlInput.disabled = true;
-            downloadBtn.disabled = true;
-            statusDiv.className = 'loading';
-            statusDiv.textContent = 'Descargando... Por favor, espera.\n(El progreso se enviará a tu backend)';
+    async function ejecutarDescargaFrontend(tipoFormato) {
+      const url = inputUrl.value.trim();
 
-            try {
-                // Invocamos el comando 'descargar_video' que definimos en Rust
-                const respuesta = await invoke('descargar_video', { url: url, formato: formato });
-                
-                statusDiv.className = 'success';
-                statusDiv.textContent = respuesta;
-                urlInput.value = ''; 
-            } catch (error) {
-                statusDiv.className = 'error';
-                statusDiv.textContent = error;
-            } finally {
-                urlInput.disabled = false;
-                downloadBtn.disabled = false;
-            }
-        });
-    </script>
+      if (!url) {
+        alert("❌ ERROR: Cadena de URL vacía. Inserte un link válido.");
+        return;
+      }
+
+      panelMenu.classList.add('oculto');
+      panelProgreso.classList.remove('oculto');
+      
+      animacionCarga.classList.remove('oculto');
+      btnRegresar.classList.add('oculto');
+      textoEstado.innerText = `>> EXEC_COMMAND: DOWNLOAD_${tipoFormato.toUpperCase()}...\n>> CONNECTING TO STREAM MATRIX...`;
+
+      try {
+        // Ejecución e inyección del resultado de Rust/Python
+        const resultado = await invoke("ejecutar_descarga", { url: url, formato: tipoFormato });
+        
+        animacionCarga.classList.add('oculto');
+        textoEstado.innerText = `>> SUCCESS: DATA_EXTRACTED_COMPLETELY\n\n${resultado}`;
+      } catch (error) {
+        animacionCarga.classList.add('oculto');
+        textoEstado.innerText = `>> CRITICAL_ERROR:\n${error}`;
+      } finally {
+        btnRegresar.classList.remove('oculto');
+      }
+    }
+
+    document.getElementById('btn-audio').addEventListener('click', () => ejecutarDescargaFrontend('audio'));
+    document.getElementById('btn-video').addEventListener('click', () => ejecutarDescargaFrontend('video'));
+
+    btnRegresar.addEventListener('click', () => {
+      inputUrl.value = "";
+      panelProgreso.classList.add('oculto');
+      panelMenu.classList.remove('oculto');
+    });
+
+    document.getElementById('btn-salir').addEventListener('click', async () => {
+      const appWindow = getCurrentWindow();
+      await appWindow.close();
+    });
+  </script>
 </body>
 </html>
