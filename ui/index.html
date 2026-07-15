@@ -69,7 +69,7 @@
     }
 
     .input-group {
-      margin-bottom: 20px;
+      margin-bottom: 15px;
     }
 
     input[type="text"] {
@@ -90,6 +90,40 @@
       outline: none;
       border-color: var(--neon-green);
       box-shadow: 0 0 10px var(--neon-green-glow);
+    }
+
+    /* --- ESTILO SELECTOR DE CALIDAD CYBERPUNK --- */
+    .calidad-container {
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .calidad-label {
+      color: var(--text-secondary);
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 12px;
+      margin-right: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    select {
+      background-color: #020203;
+      color: var(--neon-green);
+      border: 1px solid var(--cyber-blue);
+      padding: 8px 12px;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 12px;
+      border-radius: 4px;
+      outline: none;
+      cursor: pointer;
+      box-shadow: 0 0 5px rgba(0, 240, 255, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    select:focus {
+      border-color: var(--neon-green);
+      box-shadow: 0 0 8px var(--neon-green-glow);
     }
 
     .btn-group {
@@ -118,7 +152,7 @@
       transform: scale(0.98);
     }
 
-    /* Botón Verde (Audio) - Brillo suavizado al pasar el cursor */
+    /* Botón Verde (Audio) */
     .btn-audio { 
       background-color: var(--primary); 
       color: white; 
@@ -126,10 +160,10 @@
     .btn-audio:hover { 
       background-color: var(--neon-green); 
       color: #000000;
-      box-shadow: 0 0 8px var(--neon-green); /* Atenuado para que no sea muy brilloso */
+      box-shadow: 0 0 8px var(--neon-green);
     }
 
-    /* Botón Azul (Video) - Brillo suavizado al pasar el cursor */
+    /* Botón Azul (Video) */
     .btn-video { 
       background-color: #0099ff; 
       color: white; 
@@ -137,7 +171,7 @@
     .btn-video:hover { 
       background-color: var(--cyber-blue); 
       color: #000000;
-      box-shadow: 0 0 8px var(--cyber-blue);  /* Atenuado para que no sea muy brilloso */
+      box-shadow: 0 0 8px var(--cyber-blue);
     }
 
     .btn-secondary { 
@@ -150,7 +184,7 @@
       box-shadow: 0 0 6px rgba(255,255,255,0.15);
     }
 
-    /* Botón Rojo (Salir) - Brillo suavizado al pasar el cursor */
+    /* Botón Rojo (Salir) */
     .btn-danger { 
       background-color: var(--danger); 
       color: white; 
@@ -159,7 +193,7 @@
     }
     .btn-danger:hover { 
       background-color: var(--neon-red); 
-      box-shadow: 0 0 8px var(--neon-red);    /* Atenuado para que no sea muy brilloso */
+      box-shadow: 0 0 8px var(--neon-red);
     }
 
     /* Clases para alternar paneles */
@@ -188,7 +222,7 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* --- CONTENEDOR DE TERMINAL ESTILIZADO PARA LOS NÚMEROS Y % --- */
+    /* --- CONTENEDOR DE TERMINAL ESTILIZADO --- */
     .terminal-box {
       background-color: #020204;
       border: 1px solid #22252a;
@@ -201,12 +235,12 @@
     }
 
     .estado-msg {
-      font-family: 'Courier New', Courier, monospace; /* Fuente monoespaciada para alinear % */
+      font-family: 'Courier New', Courier, monospace;
       font-size: 13px;
       line-height: 1.5;
-      color: #a3e635; /* Tono verde terminal legible */
+      color: #a3e635;
       margin: 0;
-      white-space: pre-wrap; /* Mantiene saltos de línea y tabulaciones de forma estética */
+      white-space: pre-wrap;
       word-break: break-all;
     }
 
@@ -218,11 +252,103 @@
       text-transform: uppercase;
       letter-spacing: 1px;
     }
+    .oculto {
+  display: none !important;
+    }
+
+    /* --- CONTENEDOR DE LA BARRA DE CARGA --- */
+.progress-container-cyber {
+  width: 100%;
+  margin: 25px 0;
+  font-family: 'Courier New', monospace;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+/* Etiquetas superiores */
+.progress-bar-label {
+  display: flex;
+  justify-content: space-between;
+  color: #00f0ff;
+  font-size: 11px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
+  letter-spacing: 1px;
+}
+
+/* El canal exterior de la barra */
+.progress-bar-track {
+  width: 100%;
+  height: 24px;
+  background-color: #0a0d11;
+  border: 1px solid #00f0ff;
+  box-shadow: 0 0 12px rgba(0, 240, 255, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+/* El relleno interno con gradiente neón */
+.progress-bar-fill {
+  height: 100%;
+  width: 0%; /* Controlado por JS */
+  background: linear-gradient(90deg, #00f0ff 0%, #00ff66 100%);
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.5);
+  transition: width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), background 0.3s;
+  position: relative;
+}
+
+/* Animación de líneas diagonales (Efecto comercial activo) */
+.progress-bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;
+  background-image: linear-gradient(
+    -45deg, 
+    rgba(255, 255, 255, 0.15) 25%, 
+    transparent 25%, 
+    transparent 50%, 
+    rgba(255, 255, 255, 0.15) 50%, 
+    rgba(255, 255, 255, 0.15) 75%, 
+    transparent 75%, 
+    transparent
+  );
+  background-size: 30px 30px;
+  animation: move-stripes 1.2s linear infinite;
+}
+
+@keyframes move-stripes {
+  from { background-position: 30px 0; }
+  to { background-position: 0 0; }
+}
+
+/* Texto de detalles debajo de la barra */
+.progress-details-text {
+  color: #8892b0;
+  font-size: 10px;
+  margin-top: 10px;
+  line-height: 1.5;
+  text-transform: uppercase;
+  min-height: 30px; /* Evita que el layout salte */
+}
+
+/* Variación de error para la barra */
+.progress-bar-track.error-state {
+  border-color: #ff0055;
+  box-shadow: 0 0 12px rgba(255, 0, 85, 0.3);
+}
+.progress-bar-fill.error-state {
+  background: #ff0055;
+  box-shadow: 0 0 15px rgba(255, 0, 85, 0.6);
+}
+
   </style>
 </head>
 <body>
 
-  <div class="container">
+ <div class="container">
     
     <!-- 1. PANEL PRINCIPAL / MENÚ -->
     <div id="panel-menu">
@@ -232,10 +358,44 @@
       <div class="input-group">
         <input type="text" id="input-url" placeholder="[INGRESE URL DE YOUTUBE AQUÍ]" autocomplete="off">
       </div>
-      
-      <div class="btn-group">
+
+      <!-- A. GRUPO DE BOTONES INICIALES -->
+      <div id="grupo-botones-iniciales" class="btn-group">
         <button id="btn-audio" class="btn-audio">🎵 AUDIO.mp3</button>
         <button id="btn-video" class="btn-video">🎥 VIDEO.mp4</button>
+      </div>
+
+      <!-- B. SECCIÓN DE SELECCIÓN DE CALIDAD (Oculta por defecto) -->
+      <div id="contenedor-calidad" class="oculto" style="margin-top: 20px; margin-bottom: 15px; width: 100%;">
+        
+        <!-- Contenedor alineado verticalmente -->
+        <div class="calidad-container" style="display: flex; flex-direction: column; align-items: flex-start; width: 100%; gap: 8px; margin-bottom: 20px;">
+          <span class="calidad-label" style="font-family: 'Courier New', monospace; color: var(--neon-green); font-size: 11px; letter-spacing: 1px;">
+            >> SELECT_VIDEO_QUALITY:
+          </span>
+          <select id="select-calidad" style="width: 100%; box-sizing: border-box; padding: 10px; background-color: #0c0f12; border: 1px solid #454e59; color: #fff; font-family: 'Courier New', monospace; border-radius: 4px; cursor: pointer;">
+            <option value="1">1080p / 2K / 4K (Máxima)</option>
+            <option value="2" selected>720p HD (Estándar)</option>
+            <option value="3">480p (Baja / Ligera)</option>
+          </select>
+        </div>
+        
+        <!-- ⚠️ NUEVA NOTA DE SEGURIDAD / ADVERTENCIA CYBERPUNK -->
+        <div style="background-color: rgba(255, 0, 85, 0.05); border: 1px dashed var(--neon-red); padding: 10px; border-radius: 4px; margin-bottom: 20px; text-align: left;">
+          <p style="font-family: 'Courier New', monospace; color: var(--neon-red); font-size: 10px; margin: 0; line-height: 1.4; text-transform: uppercase;">
+            [!] SYSTEM_NOTICE: SI YA DESCARGASTE ESTE VIDEO ANTES, ELIMINA O MUEVE EL ARCHIVO ANTERIOR DE TU CARPETA PARA EVITAR CONFLICTOS DE SOBREESCRITURA.
+          </p>
+        </div>
+
+        <!-- Botones en paralelo perfectamente alineados -->
+        <div class="btn-group" style="display: flex; gap: 12px; width: 100%; justify-content: space-between;">
+          <button id="btn-confirmar-video" class="btn-video" style="flex: 1; padding: 12px; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            🚀 CONFIRM_EXTRACTION
+          </button>
+          <button id="btn-cancelar-calidad" class="btn-secondary" style="flex: 1; padding: 12px; font-size: 12px;">
+            ↩ CANCEL
+          </button>
+        </div>
       </div>
       
       <hr style="border: 0; border-top: 1px dashed #454e59; margin: 20px 0;">
@@ -244,71 +404,254 @@
     </div>
 
     <!-- 2. PANEL DE PROGRESO Y RESULTADOS -->
+<!-- 2. PANEL DE PROGRESO Y RESULTADOS -->
     <div id="panel-progreso" class="oculto">
-      <div id="animacion-carga" class="spinner"></div>
       
-      <!-- Consola estilo terminal para acomodar logs y porcentajes ordenadamente -->
-      <div class="terminal-box">
-        <p id="texto-estado" class="estado-msg">🚀 INICIANDO ENLACE DE DATOS... ESPERE CONEXIÓN CON YT-DLP.</p>
+      <!-- 🚀 NUEVA INTERFAZ DE CARGA COMERCIAL -->
+      <div class="progress-container-cyber">
+        <div class="progress-bar-label">
+          <span id="progreso-titulo">>> STATUS: INJECTING_STREAM</span>
+          <span id="progreso-porcentaje">0%</span>
+        </div>
+        
+        <div id="barra-track" class="progress-bar-track">
+          <div id="barra-fill" class="progress-bar-fill"></div>
+        </div>
+        
+        <div id="progreso-detalles" class="progress-details-text">
+          ESTABLISHING SECURE PROTOCOLS WITH YOUTUBE MATRIX...
+        </div>
       </div>
       
-      <button id="btn-regresar" class="btn-secondary oculto">🔄 RETURN_TO_MENU</button>
+      <button id="btn-regresar" class="btn-secondary oculto" style="width: 100%; margin-top: 10px;">🔄 RETURN_TO_MENU</button>
     </div>
 
+    <!-- Mantenemos el footer de tu terminal y el cierre de la caja .container -->
     <div class="terminal-footer">ROK_NET_SYSTEMS // PORT_8080 // SECURITY: SECURE</div>
   </div>
 
   <!-- --- LÓGICA DE CONTROL (JAVASCRIPT) --- -->
-  <script type="module">
+ <!-- --- LÓGICA DE CONTROL DE FLUJO --- -->
+<script type="module">
     const { invoke } = window.__TAURI__.core;
     const { getCurrentWindow } = window.__TAURI__.window;
 
+    // Referencias de paneles y contenedores
     const panelMenu = document.getElementById('panel-menu');
     const panelProgreso = document.getElementById('panel-progreso');
+    const grupoBotonesIniciales = document.getElementById('grupo-botones-iniciales');
+    const contenedorCalidad = document.getElementById('contenedor-calidad');
+
+    // Referencias de inputs y controles
     const inputUrl = document.getElementById('input-url');
-    const textoEstado = document.getElementById('texto-estado');
-    const animacionCarga = document.getElementById('animacion-carga');
+    const selectCalidad = document.getElementById('select-calidad');
     const btnRegresar = document.getElementById('btn-regresar');
 
+    // Nuevos botones de flujo
+    const btnConfirmarVideo = document.getElementById('btn-confirmar-video');
+    const btnCancelarCalidad = document.getElementById('btn-cancelar-calidad');
+
+    // Flag de control para evitar cierres accidentales durante la descarga
+    let estaDescargando = false;
+
+    // --- SISTEMA DE ALERTAS CON ESTILO CYBERPUNK ---
+    function mostrarAlertaCyber(mensaje, esError = false) {
+      const alertaPrevia = document.getElementById('cyber-alert');
+      if (alertaPrevia) alertaPrevia.remove();
+
+      const alerta = document.createElement('div');
+      alerta.id = 'cyber-alert';
+      
+      alerta.style.position = 'absolute';
+      alerta.style.top = '15px';
+      alerta.style.left = '50%';
+      alerta.style.transform = 'translateX(-50%)';
+      alerta.style.padding = '12px 20px';
+      alerta.style.borderRadius = '6px';
+      alerta.style.fontFamily = "'Courier New', Courier, monospace";
+      alerta.style.fontSize = '12px';
+      alerta.style.zIndex = '9999';
+      alerta.style.width = '85%';
+      alerta.style.boxSizing = 'border-box';
+      alerta.style.textAlign = 'center';
+      alerta.style.textTransform = 'uppercase';
+      alerta.style.backgroundColor = '#020204';
+      
+      if (esError) {
+        alerta.style.border = '2px solid var(--neon-red)';
+        alerta.style.color = 'var(--neon-red)';
+        alerta.style.boxShadow = '0 0 15px var(--neon-red-glow)';
+        alerta.innerHTML = `>> CRITICAL_WARNING: ${mensaje}`;
+      } else {
+        alerta.style.border = '2px solid var(--neon-green)';
+        alerta.style.color = 'var(--neon-green)';
+        alerta.style.boxShadow = '0 0 15px var(--neon-green-glow)';
+        alerta.innerHTML = `>> SYSTEM_INFO: ${mensaje}`;
+      }
+
+      document.querySelector('.container').appendChild(alerta);
+
+      setTimeout(() => {
+        alerta.style.transition = 'opacity 0.5s ease';
+        alerta.style.opacity = '0';
+        setTimeout(() => alerta.remove(), 500);
+      }, 4000);
+    }
+
+    // --- FUNCIÓN CENTRAL DE DESCARGA (Llamada a Rust + Barra Comercial Animada) ---
+// --- FUNCIÓN CENTRAL DE DESCARGA (Llamada a Rust + Validación de URL + Barra Comercial) ---
     async function ejecutarDescargaFrontend(tipoFormato) {
       const url = inputUrl.value.trim();
 
+      // 1. Validación de cadena vacía
       if (!url) {
-        alert("❌ ERROR: Cadena de URL vacía. Inserte un link válido.");
+        mostrarAlertaCyber("Cadena de URL vacía. Inserte un link válido.", true);
         return;
       }
 
+      // 2. Validación de formato de URL (Soporta youtube.com, youtu.be, etc.)
+      const youtubeRegex = /^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/;
+      if (!youtubeRegex.test(url)) {
+        mostrarAlertaCyber("URL NO VÁLIDA. VERIFIQUE EL PROTOCOLO O ENLACE DE CONEXIÓN.", true);
+        return;
+      }
+
+      // Bloqueamos la salida de la app
+      estaDescargando = true;
+
+      const calidadSeleccionada = selectCalidad ? selectCalidad.value : "1";
+
+      // Pasar a pantalla de carga
       panelMenu.classList.add('oculto');
       panelProgreso.classList.remove('oculto');
-      
-      animacionCarga.classList.remove('oculto');
       btnRegresar.classList.add('oculto');
-      textoEstado.innerText = `>> EXEC_COMMAND: DOWNLOAD_${tipoFormato.toUpperCase()}...\n>> CONNECTING TO STREAM MATRIX...`;
+
+      // Obtener referencias de la barra de carga comercial
+      const barraTrack = document.getElementById('barra-track');
+      const barraFill = document.getElementById('barra-fill');
+      const porcentajeTexto = document.getElementById('progreso-porcentaje');
+      const tituloProgreso = document.getElementById('progreso-titulo');
+      const detallesTexto = document.getElementById('progreso-detalles');
+
+      // Resetear barra de progreso a estado inicial (Estilo Cyan / Green)
+      barraTrack.classList.remove('error-state');
+      barraFill.classList.remove('error-state');
+      barraFill.style.width = "0%";
+      porcentajeTexto.innerText = "0%";
+      porcentajeTexto.style.color = "#00f0ff";
+      tituloProgreso.innerText = ">> STATUS: REQUESTING_DATA";
+      detallesTexto.innerText = "CONECTANDO CON LOS SERVIDORES DE EXTRACCIÓN... ESPERE RESPUESTA.";
+
+      // Animación simulada fluida e inteligente para el usuario
+      let progresoActual = 0;
+      const intervaloProgreso = setInterval(() => {
+        if (progresoActual < 50) {
+          progresoActual += Math.floor(Math.random() * 8) + 3; // Sube rápido al inicio
+        } else if (progresoActual < 85) {
+          progresoActual += Math.floor(Math.random() * 3) + 1; // Se frena un poco
+        } else if (progresoActual < 94) {
+          progresoActual += 0.5; // Va muy lento mientras Rust procesa la descarga final
+        }
+
+        if (progresoActual > 94) progresoActual = 94;
+
+        const pRedondeado = Math.floor(progresoActual);
+        barraFill.style.width = `${pRedondeado}%`;
+        porcentajeTexto.innerText = `${pRedondeado}%`;
+
+        if (pRedondeado > 40 && pRedondeado < 80) {
+          tituloProgreso.innerText = `>> STATUS: EXTRACTING_${tipoFormato.toUpperCase()}_STREAM`;
+          detallesTexto.innerText = "DESCARGANDO PAQUETES DE DATOS DESDE EL STREAM... NO CIERRES LA APP.";
+        } else if (pRedondeado >= 80) {
+          tituloProgreso.innerText = ">> STATUS: CONVERTING_FORMAT_CONVERSION";
+          detallesTexto.innerText = "ACOPLANDO AUDIO Y VIDEO (FFMPEG EN PROCESO). ESTO PUEDE TARDAR UN MOMENTO.";
+        }
+      }, 350);
 
       try {
-        // Ejecución e inyección del resultado de Rust/Python
-        const resultado = await invoke("ejecutar_descarga", { url: url, formato: tipoFormato });
+        // Ejecución asíncrona hacia Rust
+        const resultado = await invoke("ejecutar_descarga", { 
+          url: url, 
+          formato: tipoFormato,
+          calidad: calidadSeleccionada 
+        });
         
-        animacionCarga.classList.add('oculto');
-        textoEstado.innerText = `>> SUCCESS: DATA_EXTRACTED_COMPLETELY\n\n${resultado}`;
+        // ¡Descarga completada con éxito! (Salto al 100% inmediato y verde)
+        clearInterval(intervaloProgreso);
+        barraFill.style.width = "100%";
+        porcentajeTexto.innerText = "100%";
+        porcentajeTexto.style.color = "#00ff66";
+        tituloProgreso.innerText = ">> SUCCESS: SYSTEM_COMPLETED";
+        detallesTexto.innerText = "ARCHIVO GUARDADO EXITOSAMENTE EN TU CARPETA DE DESCARGAS.";
+        mostrarAlertaCyber("Descarga finalizada de forma exitosa.");
+
       } catch (error) {
-        animacionCarga.classList.add('oculto');
-        textoEstado.innerText = `>> CRITICAL_ERROR:\n${error}`;
+        // Manejo de error (La barra se vuelve Roja)
+        clearInterval(intervaloProgreso);
+        barraTrack.classList.add('error-state');
+        barraFill.classList.add('error-state');
+        porcentajeTexto.innerText = "FAIL";
+        porcentajeTexto.style.color = "#ff0055";
+        tituloProgreso.innerText = ">> ERROR: PROCESS_ABORTED";
+        detallesTexto.innerText = `FALLO: ${error}`;
+        mostrarAlertaCyber("Fallo en la extracción de datos.", true);
       } finally {
+        // Liberamos el bloqueo de salida y mostramos botón de retorno
+        estaDescargando = false;
         btnRegresar.classList.remove('oculto');
       }
     }
+    // --- MANEJO DE EVENTOS DE FLUJO ---
 
-    document.getElementById('btn-audio').addEventListener('click', () => ejecutarDescargaFrontend('audio'));
-    document.getElementById('btn-video').addEventListener('click', () => ejecutarDescargaFrontend('video'));
+    // 1. Clic en descargar MP3 (Descarga de inmediato)
+    document.getElementById('btn-audio').addEventListener('click', () => {
+      const url = inputUrl.value.trim();
+      if (!url) {
+        mostrarAlertaCyber("Cadena de URL vacía. Inserte un link válido.", true);
+        return;
+      }
+      ejecutarDescargaFrontend('audio');
+    });
 
+    // 2. Clic en descargar MP4 (Muestra la configuración de calidad)
+    document.getElementById('btn-video').addEventListener('click', () => {
+      const url = inputUrl.value.trim();
+      if (!url) {
+        mostrarAlertaCyber("Cadena de URL vacía. Inserte un link válido.", true);
+        return;
+      }
+      grupoBotonesIniciales.classList.add('oculto');
+      contenedorCalidad.classList.remove('oculto');
+    });
+
+    // 3. Confirmar descarga de video una vez seleccionada la calidad
+    btnConfirmarVideo.addEventListener('click', () => {
+      ejecutarDescargaFrontend('video');
+    });
+
+    // 4. Cancelar selección de calidad y volver a los botones MP3/MP4
+    btnCancelarCalidad.addEventListener('click', () => {
+      contenedorCalidad.classList.add('oculto');
+      grupoBotonesIniciales.classList.remove('oculto');
+    });
+
+    // 5. Botón Regresar de la pantalla de progreso
     btnRegresar.addEventListener('click', () => {
       inputUrl.value = "";
       panelProgreso.classList.add('oculto');
+      
+      // Reseteamos el menú inicial para la siguiente descarga
+      contenedorCalidad.classList.add('oculto');
+      grupoBotonesIniciales.classList.remove('oculto');
       panelMenu.classList.remove('oculto');
     });
 
+    // 6. Botón Salir (Evita cierre si descarga)
     document.getElementById('btn-salir').addEventListener('click', async () => {
+      if (estaDescargando) {
+        mostrarAlertaCyber("OPERACIÓN ACTIVA. No interrumpa el proceso de descarga.", true);
+        return;
+      }
       const appWindow = getCurrentWindow();
       await appWindow.close();
     });

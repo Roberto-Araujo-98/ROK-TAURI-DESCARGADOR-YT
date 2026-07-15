@@ -1,9 +1,15 @@
 use tauri_plugin_shell::ShellExt;
-use tauri::Manager; // 👈 Asegúrate de importar Manager para poder usar path()
+use tauri::Manager; 
 
 // Este es el comando que llamaremos desde el frontend (JavaScript)
 #[tauri::command]
-fn ejecutar_descarga(app_handle: tauri::AppHandle, url: String, formato: String) -> Result<String, String> {
+async fn ejecutar_descarga( // 👈 1. Añadimos "async" aquí
+    app_handle: tauri::AppHandle, 
+    url: String, 
+    formato: String, 
+    calidad: String 
+) -> Result<String, String> {
+    
     // 1. Obtener la ruta absoluta de la carpeta de recursos de Tauri
     let resource_path = app_handle
         .path()
@@ -17,7 +23,6 @@ fn ejecutar_descarga(app_handle: tauri::AppHandle, url: String, formato: String)
     let current_path = std::env::var("PATH").unwrap_or_default();
     
     // Unimos tu carpeta de recursos con el PATH actual usando el separador correcto según el OS
-    // En Windows usa ';', en Linux/Mac usa ':'
     let separador = if cfg!(windows) { ";" } else { ":" };
     let nuevo_path = format!("{}{}{}", resource_str, separador, current_path);
 
@@ -30,13 +35,16 @@ fn ejecutar_descarga(app_handle: tauri::AppHandle, url: String, formato: String)
     // 4. Pasar los argumentos y configurar el entorno INYECTANDO EL NUEVO PATH
     let sidecar_command = sidecar_command
         .env("PYTHONIOENCODING", "utf-8")
-        .env("PATH", nuevo_path) // 👈 Aquí le decimos a Python dónde buscar ffmpeg
-        .args([url, formato]);
+        .env("PATH", nuevo_path) 
+        .args([url, formato, calidad]); 
 
-    // 5. Ejecutar el binario de forma síncrona y esperar la respuesta
-    let output = tauri::async_runtime::block_on(async {
-        sidecar_command.output().await
-    }).map_err(|e| format!("Error al ejecutar el descargador: {}", e))?;
+    // 5. ¡LA MAGIA ASÍNCRONA! 🚀 
+    // Ejecutamos directamente con `.await` sin usar block_on.
+    // Esto mantiene el hilo de la interfaz de usuario libre y libre de congelamientos.
+    let output = sidecar_command
+        .output()
+        .await 
+        .map_err(|e| format!("Error al ejecutar el descargador: {}", e))?;
 
     // 6. Validar si el script de Python terminó con éxito o con errores
     if output.status.success() {

@@ -23,12 +23,9 @@ def mostrar_menu():
     print("3. ❌ Salir")
     print("-" * 50)
 
-def elegir_calidad_video():
-    print("\n📐 Selecciona la calidad del video:")
-    print("1. 🚀 Máxima disponible (4K, 2K, 1080p)")
-    print("2. 📺 Estándar HD (720p)")
-    print("3. 🔋 Baja / Ligera (480p)")
-    opc = input("Selecciona una calidad (1-3): ").strip()
+def elegir_calidad_video(opc_manual=None):
+    # Si viene desde la interfaz gráfica de Tauri, ya tenemos la opción predefinida en opc_manual
+    opc = opc_manual if opc_manual else input("Selecciona una calidad (1-3): ").strip()
     
     if opc == '2':
         return 'bestvideo[height<=720]+bestaudio/best'
@@ -37,14 +34,12 @@ def elegir_calidad_video():
     else:
         return 'bestvideo+bestaudio/best'
 
-def descargar_media(url, opcion):
+def descargar_media(url, opcion, calidad_predefinida=None):
     # 🎯 LOCALIZADOR ABSOLUTO DE FFMPEG PARA ENTORNO TAURI
     ffmpeg_bin = None
 
     if getattr(sys, 'frozen', False):
         # 🤖 MODO TAURI COMPILADO / PRODUCCIÓN:
-        # sys.executable nos da la ubicación real del .exe de Python dentro del directorio de Tauri,
-        # rompiendo el aislamiento de la carpeta temporal Temp/_MEIxxx de PyInstaller.
         directorio_real_exe = os.path.dirname(os.path.abspath(sys.executable))
         
         opciones_ruta = [
@@ -58,7 +53,6 @@ def descargar_media(url, opcion):
                 break
     else:
         # 💻 MODO MANUAL / ENTORNO DESARROLLO DE TAURI:
-        # Si ejecutas el script suelto o por consola, busca en las carpetas base del proyecto
         directorio_script = os.path.dirname(os.path.abspath(__file__))
         opciones_ruta = [
             os.path.join(directorio_script, 'ffmpeg.exe'),
@@ -100,10 +94,8 @@ def descargar_media(url, opcion):
             }],
         })
     elif opcion in ['2', 'video']:
-        if len(sys.argv) >= 3:
-            formato_seleccionado = 'bestvideo+bestaudio/best'
-        else:
-            formato_seleccionado = elegir_calidad_video()
+        # Mapeamos dinámicamente la calidad requerida
+        formato_seleccionado = elegir_calidad_video(calidad_predefinida)
             
         print(f"📺 Configurando descarga de video con la resolución elegida usando: {ffmpeg_bin}")
         ydl_opts.update({
@@ -123,11 +115,15 @@ def descargar_media(url, opcion):
         print(f"\n❌ Ocurrió un error crítico durante la descarga: {e}")
 
 if __name__ == "__main__":
-    # 🤖 INTERFAZ DE TAURI: Si Rust le inyecta argumentos por consola (URL y formato)
+    # 🤖 INTERFAZ DE TAURI: Si Rust le inyecta argumentos por consola (URL, formato y opcionalmente calidad)
     if len(sys.argv) >= 3:
         url_argumento = sys.argv[1].strip()
         formato_argumento = sys.argv[2].strip()
-        descargar_media(url_argumento, formato_argumento)
+        
+        # Leemos el 4° argumento si existe (la calidad '1', '2' o '3')
+        calidad_argumento = sys.argv[3].strip() if len(sys.argv) >= 4 else None
+        
+        descargar_media(url_argumento, formato_argumento, calidad_argumento)
         
     # 💻 USO MANUAL: Si abres el script directamente en la terminal
     else:
@@ -145,6 +141,7 @@ if __name__ == "__main__":
                     print("❌ El enlace no puede estar vacío. Intenta de nuevo.\n")
                     continue
                 
+                # En modo manual el tercer parámetro se queda vacío para que pregunte por consola
                 descargar_media(url, opcion)
             else:
                 print("❌ Opción no reconocida. Por favor, digita 1, 2 o 3.\n")
