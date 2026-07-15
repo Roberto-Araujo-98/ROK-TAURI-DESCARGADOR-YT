@@ -126,4 +126,19 @@ Para transformar esta herramienta local en un software compatible con múltiples
 
 Desarrollado como una aplicación de escritorio local, rápida y segura. Bajo una optimización constante guiada por un enfoque de desarrollo activo y libre, disfrutando de la creación pura de software sin límites.
 
+## 🔄 Mantenimiento y Actualizaciones
+
+Debido a que **YouTube** modifica constantemente su plataforma, APIs y algoritmos de firma digital para evitar las descargas, es completamente normal que las herramientas de extracción dejen de funcionar de vez en cuando. 
+
+Para garantizar que **DESCARGADOR-YT-ROK** siga funcionando a la perfección, este proyecto se mantendrá y actualizará de manera continua a través de este repositorio de GitHub.
+
+### 🛠️ ¿Cómo mantener tu app al día?
+Si notas que un video da error o que la descarga se interrumpe de la nada:
+
+1. **Revisa la pestaña de Releases:** Dirígete a la sección de *Releases* en este repositorio.
+2. **Descarga la última versión:** Bájate el instalador `.msi` más reciente.
+3. **Instala sin miedo:** Ejecuta el nuevo instalador. Este pisará la versión anterior de forma automática, actualizando el motor interno de descargas (`yt-dlp`) sin que tengas que configurar nada de nuevo.
+
+> 💡 **Próximamente:** Estamos planificando la integración del actualizador automático nativo (*Tauri Updater*). En futuras versiones, la app se conectará a este repositorio al iniciar y te avisará si hay una actualización lista para instalar con un solo clic.
+
 *Creado por Roberto Ricardo Araujo Ari - ROK.*
