@@ -1,10 +1,10 @@
 [package]
-name = "app"
+name = "descargador-yt-rok"
 version = "0.1.0"
-description = "A Tauri App"
-authors = ["you"]
-license = ""
-repository = ""
+description = "Un software hecho y derecho para descargar videos de YouTube sin complicaciones."
+authors = ["ROK <https://github.com/Roberto-Araujo-98>"]
+license = "MIT"
+repository = "https://github.com/Roberto-Araujo-98/ROK-TAURI-DESCARGADOR-YT"
 edition = "2021"
 rust-version = "1.77.2"
 
