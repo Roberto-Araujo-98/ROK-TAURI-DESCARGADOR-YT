@@ -33,6 +33,12 @@
       "icons/icon.icns",
       "icons/icon.ico"
     ],
+    "licenseFile": "./licencia.rtf",
+    "windows": {
+      "wix": {
+        "language": "es-ES"
+      }
+    },
     "android": {
       "debugApplicationIdSuffix": ".debug"
     },
@@ -40,9 +46,7 @@
       "binaries/descargador-yt"
     ],
     "resources": [
-    "resources/ffmpeg.exe",
-    "resources/ffprobe.exe"
-  ]
-    
-  }
-}
+      "resources/ffmpeg.exe",
+      "resources/ffprobe.exe"
+    ]
+  }}
