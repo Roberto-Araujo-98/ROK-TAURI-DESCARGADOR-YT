@@ -1,6 +1,6 @@
 [package]
 name = "descargador-yt-rok"
-version = "0.1.0"
+version = "0.1.1"
 description = "Un software hecho y derecho para descargar videos de YouTube sin complicaciones."
 authors = ["ROK <https://github.com/Roberto-Araujo-98>"]
 license = "MIT"
